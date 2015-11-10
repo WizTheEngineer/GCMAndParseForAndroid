@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "GCM Testing": {
+      "applicationId": "cC3qwSUcAfDtQL5kNpD8BCeUjvWfxwrnNO9Lp7mi"
+    },
+    "_default": {
+      "link": "GCM Testing"
+    }
+  }
+}
