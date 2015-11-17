@@ -36,7 +36,8 @@ public class StringValidator {
         return emailAddress.contains(" ") == false && emailAddress.matches(".+@.+\\.[a-z]+");
     }
 
-    public static boolean match(String stringOne, String stringTwo) {
+    // Checks if two strings match one another
+    public static boolean matches(String stringOne, String stringTwo) {
         return stringOne.equals(stringTwo);
     }
 }

@@ -5,7 +5,6 @@ import android.app.ProgressDialog;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -142,7 +141,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         } else if (!StringValidator.isValidEmail(email)) {
             mToaster.showShortMessage(R.string.invalid_email);
             return false;
-        } else if (!StringValidator.match(password, passwordConfirmation)) {
+        } else if (!StringValidator.matches(password, passwordConfirmation)) {
             mToaster.showShortMessage(R.string.passwords_do_not_match);
             return false;
         } else if (password.length() < MINIMUM_PASSWORD_LENGTH) {

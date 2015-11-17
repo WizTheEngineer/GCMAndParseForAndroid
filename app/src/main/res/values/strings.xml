@@ -31,4 +31,6 @@
     <string name="cannot_message_self">You cannot message yourself silly!</string>
     <string name="message_success">Message sent successfully!</string>
     <string name="message_error">Error sending message, please try again.</string>
+    <string name="error_signing_out">Error signing out, please try again.</string>
+    <string name="signing_out">Signing out...</string>
 </resources>

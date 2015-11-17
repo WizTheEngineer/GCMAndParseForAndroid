@@ -41,7 +41,7 @@ function sendGoogleCloudMessage(sender, message, receiver, response) {
 	    'Content-Type': 'application/json'
 	  },
 	  body: {
-	    to: receiver.get("gcmRegistrationToken"),
+	    registration_ids: receiver.get("gcmRegistrationTokens"),
 	    data: {
 	      "senderId" : sender.id,
 	      "senderEmail" : sender.get("email"),

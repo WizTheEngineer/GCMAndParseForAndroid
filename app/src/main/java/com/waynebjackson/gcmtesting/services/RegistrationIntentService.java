@@ -24,7 +24,6 @@ import java.io.IOException;
 public class RegistrationIntentService extends IntentService {
 
     private static final Logger LOGGER = new Logger(RegistrationIntentService.class.getSimpleName());
-    private static final String[] TOPICS = {"global"};
 
     public RegistrationIntentService() {
         super(RegistrationIntentService.class.getSimpleName());
@@ -81,7 +80,7 @@ public class RegistrationIntentService extends IntentService {
     private void sendRegistrationToServer(String token) {
         // Add custom implementation, as needed.
         GCMUser currentUser = GCMUser.getCurrentUser();
-        currentUser.setGoogleCloudMessengerRegistrationToken(token);
+        currentUser.addGoogleCloudMessengerRegistrationToken(this, token);
         currentUser.saveInBackground(new SaveCallback() {
 
             @Override

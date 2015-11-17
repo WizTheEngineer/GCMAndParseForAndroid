@@ -10,5 +10,6 @@ public class QuickstartPreferences {
             + GCMUser.getCurrentUser().getObjectId();
     public static final String REGISTRATION_COMPLETE = "registrationComplete"
             + GCMUser.getCurrentUser().getObjectId();
+    public static final String LOCAL_GCM_TOKEN = "gcmToken";
 
 }

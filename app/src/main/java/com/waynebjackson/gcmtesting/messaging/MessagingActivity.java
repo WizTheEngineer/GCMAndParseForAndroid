@@ -11,14 +11,16 @@ import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.widget.ProgressBar;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.waynebjackson.gcmtesting.R;
+import com.waynebjackson.gcmtesting.listeners.TokenRemovalListener;
 import com.waynebjackson.gcmtesting.log.Logger;
 import com.waynebjackson.gcmtesting.login.LoginActivity;
+import com.waynebjackson.gcmtesting.models.GCMUser;
 import com.waynebjackson.gcmtesting.preferences.QuickstartPreferences;
 import com.waynebjackson.gcmtesting.services.RegistrationIntentService;
 import com.waynebjackson.gcmtesting.system.Toaster;
@@ -29,7 +31,7 @@ public class MessagingActivity extends AppCompatActivity {
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private Toaster mToaster;
-    private ProgressDialog mRegistrationProgressDialog;
+    private ProgressDialog mProgressDialog;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
 
     @Override
@@ -42,16 +44,15 @@ public class MessagingActivity extends AppCompatActivity {
 
         mToaster = new Toaster(this);
 
-        mRegistrationProgressDialog = new ProgressDialog(this);
-        mRegistrationProgressDialog.setTitle(getString(R.string.we_are_working_on_it));
-        mRegistrationProgressDialog.setMessage(getString(R.string.registering_for_gcm));
-        mRegistrationProgressDialog.show();
+        mProgressDialog = new ProgressDialog(this);
+        showProgressDialog(getString(R.string.we_are_working_on_it),
+                getString(R.string.registering_for_gcm));
 
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                mRegistrationProgressDialog.dismiss();
+                hideProgressDialog();
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = sharedPreferences
@@ -85,9 +86,37 @@ public class MessagingActivity extends AppCompatActivity {
         super.onPause();
     }
 
+    private void showProgressDialog(String title, String message) {
+        mProgressDialog.setTitle(title);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+    }
+
+    private void hideProgressDialog() {
+        mProgressDialog.dismiss();
+    }
+
     public void signOut() {
-        ParseUser.logOut();
-        returnToLoginActivity();
+        showProgressDialog(getString(R.string.we_are_working_on_it), getString(R.string.signing_out));
+
+        // Remove this local gcm registration token from the servers first.
+        GCMUser currentUser = GCMUser.getCurrentUser();
+        currentUser.removeGoogleCloudRegistrationToken(this, new TokenRemovalListener() {
+
+            @Override
+            public void onSuccess() {
+                hideProgressDialog();
+                ParseUser.logOut();
+                returnToLoginActivity();
+            }
+
+            @Override
+            public void onError(ParseException e) {
+                hideProgressDialog();
+                mToaster.showShortMessage(R.string.error_signing_out);
+                LOGGER.e(e, "Error signing out and removing token from Parse.");
+            }
+        });
     }
 
     private void returnToLoginActivity() {

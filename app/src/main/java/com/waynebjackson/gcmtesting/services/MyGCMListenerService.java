@@ -20,9 +20,12 @@ import com.waynebjackson.gcmtesting.messaging.MessagingActivity;
 public class MyGCMListenerService extends GcmListenerService {
     private static final Logger LOGGER = new Logger(MyGCMListenerService.class.getSimpleName());
 
+    private static final int NOTIFICATION_REQUEST_CODE = 0;
+    private static final int NOTIFICATION_ID = 0;
+    private static final String NOTIFICATION_TITLE = "New Message!";
+
     /**
      * Called when message is received.
-     *
      * @param from SenderID of the sender.
      * @param data Data bundle containing message data as key/value pairs.
      *             For Set of keys use data.keySet().
@@ -30,7 +33,6 @@ public class MyGCMListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        // TODO: Do what you need to with the message
         String message = data.getString("message");
         LOGGER.d("Data: " + data);
         LOGGER.d("From: " + from);
@@ -57,23 +59,21 @@ public class MyGCMListenerService extends GcmListenerService {
         sendNotification(message);
         // [END_EXCLUDE]
     }
-    // [END receive_message]
 
     /**
      * Create and show a simple notification containing the received GCM message.
-     *
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
         Intent intent = new Intent(this, MessagingActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, NOTIFICATION_REQUEST_CODE, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
         Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("GCM Message")
+                .setContentTitle(NOTIFICATION_TITLE)
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
@@ -82,6 +82,6 @@ public class MyGCMListenerService extends GcmListenerService {
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build());
     }
 }
