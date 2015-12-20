@@ -1,5 +1,5 @@
 # GCMAndParseForAndroid
-Messenger Using Parse and Google Cloud Messenger
+Hi everyone, this project will basically get you started with Google Cloud Messenging and Parse to send real-time push notifications. This will be great if you need any type of live events such as instant messenging. It requires a bit of setup but it is pretty straight forward. If you have any question please leave it as a question on here and I will get back to you when I can. Enjoy!
 
 <h2>Parse Setup</h2>
 <ol>
