@@ -6,10 +6,10 @@ package com.waynebjackson.gcmtesting.configuration;
 public class GCMConfig {
 
     public static String getServerAPIKey() {
-        return "AIzaSyDhRdlsQH3VDe8P_0d-HmBXlXVvHIu4YRc";
+        return "";
     }
 
     public static String getSenderID() {
-        return "257477918858";
+        return "";
     }
 }

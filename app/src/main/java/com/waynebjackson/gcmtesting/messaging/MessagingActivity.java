@@ -105,6 +105,7 @@ public class MessagingActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess() {
+                // TODO: Clear any showing notifications
                 hideProgressDialog();
                 ParseUser.logOut();
                 returnToLoginActivity();

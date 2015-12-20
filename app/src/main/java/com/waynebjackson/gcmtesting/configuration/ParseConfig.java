@@ -6,10 +6,10 @@ package com.waynebjackson.gcmtesting.configuration;
 public class ParseConfig {
 
     public static String getApplicationId() {
-        return "cC3qwSUcAfDtQL5kNpD8BCeUjvWfxwrnNO9Lp7mi";
+        return "";
     }
 
     public static String getClientKey() {
-        return "rGLgvDXbNTOAtVnxMhphtAQnMxnJ5IjNIqaSAY64";
+        return "";
     }
 }

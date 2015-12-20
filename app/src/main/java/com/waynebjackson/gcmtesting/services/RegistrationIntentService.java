@@ -47,7 +47,7 @@ public class RegistrationIntentService extends IntentService {
             // [END get_token]
             LOGGER.i("GCM Registration Token: " + token);
 
-            // TODO: Implement this method to send any registration to your app's servers.
+            // Send registration to server
             sendRegistrationToServer(token);
 
             // Subscribe to topic channels
